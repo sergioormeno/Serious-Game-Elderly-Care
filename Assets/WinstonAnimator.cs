@@ -3,62 +3,79 @@ using System.Collections;
 
 public class WinstonAnimator : ElSingleton<WinstonAnimator>
 {
-    NavMeshAgent _agent; 
-    Animator _anim;
+    NavMeshAgent agente;
+    [HideInInspector]
+    public Animator animator;
     public Transform eatPos1;
     public Transform eatPos2;
-    public Transform pos2;
-    public Transform pos3;
-    public Transform pos4;
+    public Transform showerPos1;
+    public Transform showerPos2;
+    public Transform kitchenPos1;
+    public Transform bedPos1;
     public Transform platoDeComida;
 
 
     void Start()
     {
-        _anim = GetComponent<Animator>();
-        _agent = GetComponent<NavMeshAgent>();        
+        animator = GetComponent<Animator>();
+        agente = GetComponent<NavMeshAgent>();
     }
 
     void OnAnimatorMove()
     {
-        _agent.velocity = _anim.deltaPosition / Time.deltaTime;
-    }    
+        agente.velocity = animator.deltaPosition / Time.deltaTime;
+    }
 
     void Update()
     {
-        _anim.SetFloat("Speed", _agent.velocity.magnitude);
-        if (Input.GetKeyDown(KeyCode.P)) {
-            StartCoroutine(Sitting());
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            _agent.destination = pos2.position;
-        }
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            gameObject.transform.LookAt(platoDeComida);
-            _anim.applyRootMotion = true;
-            _anim.SetBool("eat", true);
-        }
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            _anim.SetBool("eat", false);
-        }
-
+        animator.SetFloat("Speed", agente.velocity.magnitude);
     }
 
     public IEnumerator Sitting()
     {
-        _agent.destination = eatPos2.position;
+        agente.destination = eatPos1.position;
         yield return new WaitForSeconds(1f);
-        while (_anim.GetFloat("Speed")!=0) yield return new WaitForSeconds(1f); ;
-        sitPos();        
-        _anim.SetBool("eat", true);
+        while (animator.GetFloat("Speed") != 0) yield return new WaitForSeconds(1f);
+        agente.destination = eatPos2.position;
+        yield return new WaitForSeconds(1f);
+        while (animator.GetFloat("Speed") != 0) yield return new WaitForSeconds(1f);
+        sitPosWhileEating();
+        Sit();
     }
 
-    public void sitPos()
+    public void sitPosWhileEating()
     {
-        _agent.transform.LookAt(platoDeComida);
+        agente.transform.LookAt(platoDeComida);
+    }
+
+    public void Stand()
+    {
+        animator.SetBool("sit", false);
+        Winston.Instance.sit = false;
+    }
+
+    public void Sit()
+    {
+        animator.SetBool("sit", true);
+        Winston.Instance.sit = true;
+    }
+
+    public IEnumerator GotoBathroom()
+    {
+        if (!Winston.Instance.sit) yield return new WaitForSeconds(4.5f);
+        agente.destination = showerPos1.position;
+    }
+
+    public IEnumerator HelpWinstonLeaveBath()
+    {
+        yield return new WaitForSeconds(2f);
+        agente.destination = showerPos1.position;
+        GameStatus.Instance.Stat.Duchar = 5;
+    }
+
+    public void EnterShower()
+    {
+        agente.destination = showerPos2.position;
+        GameStatus.Instance.Stat.Duchar = 3;
     }
 }

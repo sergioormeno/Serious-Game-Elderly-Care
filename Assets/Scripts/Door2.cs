@@ -45,6 +45,17 @@ public class Door2 : MonoBehaviour {
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Winston")
+        {
+            if (!open)
+            {
+                Interact();
+            }
+        }
+    }
+
 
 
 }
