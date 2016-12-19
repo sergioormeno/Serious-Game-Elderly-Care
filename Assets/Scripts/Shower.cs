@@ -30,12 +30,12 @@ public class Shower : MonoBehaviour {
     {
         if (other.gameObject.tag == "Winston")
         {
-            StartCoroutine(DucharaWinston());
+            StartCoroutine(DucharWinston());
             GetComponent<BoxCollider>().enabled = false;
         }
     }
 
-    public IEnumerator DucharaWinston()
+    public IEnumerator DucharWinston()
     {
         Winston.Instance.TakingBath = true;
         while (WinstonAnimator.Instance.animator.GetFloat("Speed") != 0) yield return new WaitForSeconds(1f);

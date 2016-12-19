@@ -42,11 +42,7 @@ public class Winston : ElSingleton<Winston>
 
     public bool TakingBath
     {
-        get
-        {
-            return takingBath;
-        }
-
+        get{return takingBath;}
         set
         {
             takingBath = value;
@@ -89,7 +85,10 @@ public class Winston : ElSingleton<Winston>
 
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            TakingBath = true;
+        }
     }
 
 
@@ -111,6 +110,7 @@ public class Winston : ElSingleton<Winston>
                     break;
                 case 2:
                     displayMisionPanel();
+                    GameStatus.Instance.pActions.Actions = "Para ayudar a Winston a entrar a la ducha, el orden de acciones que toma son:";
                     break;
                 case 4:
                     StartCoroutine(WinstonAnimator.Instance.HelpWinstonLeaveBath());
