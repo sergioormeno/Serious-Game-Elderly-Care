@@ -77,6 +77,5 @@ public class WinstonAnimator : ElSingleton<WinstonAnimator>
     {
         agente.destination = showerPos2.position;
         GameStatus.Instance.Stat.Duchar = 3;
-        WinstonAnimator.Instance.EnterShower();
     }
 }
