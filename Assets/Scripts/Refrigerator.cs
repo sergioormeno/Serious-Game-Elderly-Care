@@ -9,7 +9,6 @@ public class Refrigerator : MonoBehaviour {
     public AudioSource src; 
 
 	public void Interact(){
-        CameraHandler.Instance.FirstPersonMode = false;
 		if (gs.Stat.Cocinar == 0) {
             src.PlayOneShot(OpenFridge);
             displayMisionPanel();

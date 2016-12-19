@@ -17,9 +17,6 @@ public class Lavaplatos : MonoBehaviour {
 		}
 	}
 
-	void Awake(){
-	}
-
     public IEnumerator lavarPlatos()
     {
         src.PlayOneShot(_washSound);

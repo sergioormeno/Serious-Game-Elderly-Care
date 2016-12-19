@@ -40,6 +40,22 @@ public class InputHandler : MonoBehaviour
                 }
             }
         }
+
+        if (Input.GetMouseButton(1))
+        {
+            Ray ray = GetComponent<Camera>().ScreenPointToRay(new Vector3(x, y));
+            RaycastHit rayCastHit;
+
+            if (timeStamp <= Time.time)
+            {
+                timeStamp = Time.time + 1;
+                if (Physics.Raycast(ray.origin, ray.direction, out rayCastHit, Mathf.Infinity))
+                {
+                    obj = rayCastHit.collider.gameObject;
+                    obj.SendMessage("Help", null, SendMessageOptions.DontRequireReceiver);
+                }
+            }
+        }
     }
 
 

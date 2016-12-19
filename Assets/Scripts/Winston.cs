@@ -97,7 +97,6 @@ public class Winston : ElSingleton<Winston>
     {
         if (sit)
         {
-            Debug.Log("if");
             WinstonAnimator.Instance.Stand();
             if (GameStatus.Instance.Stat.Tutorial == 3) GameStatus.Instance.Stat.Tutorial = 4;
             if (GameStatus.Instance.Stat.Duchar == 1) StartCoroutine(WinstonAnimator.Instance.GotoBathroom());
