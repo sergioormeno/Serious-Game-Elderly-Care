@@ -21,16 +21,24 @@ public class SCManager : ElSingleton<SCManager> {
         }
     }
 
-    public void LastScene(string s){
+    public void LastSceneNameEquals(string s){
 		lastScene = s; 
 	}
 
-	public string RLastScene(){
+	public string ReturnLastSceneName(){
 		return lastScene;
 	}
 
-	void Start(){
+    public void LoadScene(string sc)
+    {
+        LastSceneNameEquals(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(sc);     
+    }
+
+    void Start(){
 		Scene scene = SceneManager.GetActiveScene ();		
 		lastScene = scene.name; 
 	}
+
+
 }

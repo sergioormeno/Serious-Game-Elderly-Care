@@ -50,14 +50,14 @@ public class WinstonAnimator : ElSingleton<WinstonAnimator>
 
     public void Stand()
     {
-        animator.SetBool("sit", false);
         Winston.Instance.sit = false;
+        animator.SetBool("sit", false);
     }
 
     public void Sit()
     {
-        animator.SetBool("sit", true);
         Winston.Instance.sit = true;
+        animator.SetBool("sit", true);
     }
 
     public IEnumerator GotoBathroom()

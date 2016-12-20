@@ -122,19 +122,7 @@ public class Winston : ElSingleton<Winston>
             }
         }
 
-        //if (GameStatus.Instance.Stat.Duchar == 1)
-        //{
-        //    if (!WinstonAnimator.Instance.isWinstonStand)
-        //    {
-        //        WinstonAnimator.Instance.Stand();
-        //        Debug.Log("stand de help duchar");
-        //    }
 
-        //    else
-        //    {
-        //        WinstonAnimator.Instance.GotoBath();
-        //    }
-        //}
     }
 
 
