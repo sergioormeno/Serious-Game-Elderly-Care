@@ -8,9 +8,13 @@ public class PlatoALavar : MonoBehaviour
 
     public void Interact()
     {
-        GameStatus.Instance.Stat.Cocinar = 4;
-        src.PlayOneShot(pickUpSound);
-        gameObject.GetComponent<MeshRenderer>().enabled = false;
+        if(GameStatus.Instance.Stat.Cocinar == 3)
+        {
+            GameStatus.Instance.Stat.Cocinar = 4;
+            src.PlayOneShot(pickUpSound);
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
+        }
+       
     }
 
     void Start()

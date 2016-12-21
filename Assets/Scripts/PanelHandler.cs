@@ -77,7 +77,7 @@ public class PanelHandler : ElSingleton<PanelHandler>
         dr.counter = 1;
     }
 
-    public IEnumerator LinearQuest()
+    public IEnumerator LinearQuest() //controla el comportamiento del diario.
     {
         while (dr.counter == 0) yield return new WaitForSeconds(1f);
         //Mision 0 tutorial
@@ -93,8 +93,8 @@ public class PanelHandler : ElSingleton<PanelHandler>
         LeanTween.alphaCanvas(Ticket, 0f, 0.2f).setDelay(0.4f);
         //Mision 0 Tutorial Panel 2
         LeanTween.alphaCanvas(M0Tutorial.GetComponent<CanvasGroup>(), 0f, 0.2f).setDelay(0.2f);
-        LeanTween.alphaCanvas(M0TutorialP2.GetComponent<CanvasGroup>(), 1f, 1f).setDelay(0.2f);
-        isOnAnimation = false; // enable InputHandler
+        LeanTween.alphaCanvas(M0TutorialP2.GetComponent<CanvasGroup>(), 1f, 1f).setDelay(0.2f).setOnComplete(()=> { isOnAnimation = false; });
+        // enable InputHandler
         LeanTween.alphaCanvas(animCanvas3.GetComponent<CanvasGroup>(), 0f, 1f).setDelay(1f).setLoopPingPong().setRepeat(10);
         while (gs.Stat.Tutorial != 4) yield return new WaitForSeconds(1);
         if (!dr.open) dr.displayDiary(dr.open);
@@ -105,7 +105,7 @@ public class PanelHandler : ElSingleton<PanelHandler>
         LeanTween.alphaCanvas(Ticket, 0f, 0.2f).setDelay(0.4f);
         //Mision 1, Fixing
         LeanTween.alphaCanvas(M0TutorialP2.GetComponent<CanvasGroup>(), 0f, 0.2f).setDelay(0.2f);
-        LeanTween.alphaCanvas(M1Fixing.GetComponent<CanvasGroup>(), 1f, 1f).setDelay(1f);
+        LeanTween.alphaCanvas(M1Fixing.GetComponent<CanvasGroup>(), 1f, 1f).setDelay(1f).setOnComplete(() => { isOnAnimation = false; });
         isOnAnimation = false; // enable InputHandler
         gs.Stat.overall = 2;
         while (gs.Stat.Fixing != 3) yield return new WaitForSeconds(1);
@@ -117,7 +117,7 @@ public class PanelHandler : ElSingleton<PanelHandler>
         LeanTween.alphaCanvas(Ticket, 0f, 0.2f).setDelay(0.4f);
         //Mision 1, Cooking
         LeanTween.alphaCanvas(M1Fixing.GetComponent<CanvasGroup>(), 0f, 0.2f).setDelay(0.2f);
-        LeanTween.alphaCanvas(M2Cooking.GetComponent<CanvasGroup>(), 1f, 1f).setDelay(1f);
+        LeanTween.alphaCanvas(M2Cooking.GetComponent<CanvasGroup>(), 1f, 1f).setDelay(1f).setOnComplete(() => { isOnAnimation = false; });
         isOnAnimation = false;
         while (gs.Stat.Cocinar != 3) yield return new WaitForSeconds(1f);
         if (!dr.open) dr.displayDiary(dr.open);
@@ -127,7 +127,7 @@ public class PanelHandler : ElSingleton<PanelHandler>
         while (LeanTween.isTweening(id) == true) yield return new WaitForSeconds(2);
         LeanTween.alphaCanvas(Ticket, 0f, 0.2f).setDelay(0.4f);
         LeanTween.alphaCanvas(M2Cooking.GetComponent<CanvasGroup>(), 0f, 0.2f).setDelay(0.2f);
-        LeanTween.alphaCanvas(M3Bath.GetComponent<CanvasGroup>(), 1f, 1f).setDelay(1f);
+        LeanTween.alphaCanvas(M3Bath.GetComponent<CanvasGroup>(), 1f, 1f).setDelay(1f).setOnComplete(() => { isOnAnimation = false; });
         isOnAnimation = false; // disable InputHandler
     }
 

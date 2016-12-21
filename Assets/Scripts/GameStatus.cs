@@ -8,8 +8,6 @@ public class GameStatus : ElSingleton<GameStatus>
     public bool bar1 = false;
     [HideInInspector]
     public bool bar2 = false;
-    [HideInInspector]
-    public bool readyToEat = false;
     [Header("Barras")]
     public GameObject FirstBar;
     public GameObject SecondBar;

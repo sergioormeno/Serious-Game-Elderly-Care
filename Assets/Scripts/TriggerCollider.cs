@@ -9,7 +9,6 @@ public class TriggerCollider : MonoBehaviour {
     {        
         if(other.gameObject.tag == "Winston")
         {
-            GameStatus.Instance.readyToEat=true;
         }
     }
 }

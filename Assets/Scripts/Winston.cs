@@ -79,16 +79,11 @@ public class Winston : ElSingleton<Winston>
 
             gs.Stat.Cocinar = 3;
             hungry = 0;
-
         }
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            TakingBath = true;
-        }
     }
 
 
@@ -96,9 +91,18 @@ public class Winston : ElSingleton<Winston>
     {
         if (sit)
         {
-            WinstonAnimator.Instance.Stand();
-            if (GameStatus.Instance.Stat.Tutorial == 3) GameStatus.Instance.Stat.Tutorial = 4;
-            if (GameStatus.Instance.Stat.Duchar == 1) StartCoroutine(WinstonAnimator.Instance.GotoBathroom());
+            if (GameStatus.Instance.Stat.Tutorial == 3)
+            {
+                WinstonAnimator.Instance.Stand();
+                GameStatus.Instance.Stat.Tutorial = 4;
+            }
+
+            if (GameStatus.Instance.Stat.Duchar == 1)
+            {
+                WinstonAnimator.Instance.Stand();
+                StartCoroutine(WinstonAnimator.Instance.GotoBathroom());
+            }
+
         }
         else
         {

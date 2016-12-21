@@ -32,7 +32,8 @@ public class SCManager : ElSingleton<SCManager> {
     public void LoadScene(string sc)
     {
         LastSceneNameEquals(SceneManager.GetActiveScene().name);
-        SceneManager.LoadScene(sc);     
+        SceneManager.LoadScene(sc);
+        GlobalPanelHandler.Instance.ResetValues();
     }
 
     void Start(){

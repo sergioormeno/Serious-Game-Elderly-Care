@@ -10,8 +10,11 @@ public class Refrigerator : MonoBehaviour {
 
 	public void Interact(){
 		if (gs.Stat.Cocinar == 0) {
-            src.PlayOneShot(OpenFridge);
-            displayMisionPanel();
+            if(gs.Stat.Fixing == 3 )
+            {
+                src.PlayOneShot(OpenFridge);
+                displayMisionPanel();
+            }
             Debug.Log ("Haz seleccionado los ingredientes");
 		} else {
 			if (gs.Stat.Cocinar == 1) {
