@@ -136,7 +136,7 @@ public class Winston : ElSingleton<Winston>
     {
         PlatoLleno.SetActive(true);
         yield return new WaitForSeconds(2f);
-        PanelHandler.Instance.IsDarkPanelActive = true;
+        DiaryPanelHandler.Instance.IsDarkPanelActive = true;
         src.PlayOneShot(_eatingSound);
         yield return new WaitForSeconds(4f);
         src.Stop();
@@ -147,13 +147,13 @@ public class Winston : ElSingleton<Winston>
         }
         PlatoLleno.SetActive(false);
         PlatoVacio.GetComponent<MeshRenderer>().enabled = true;
-        PanelHandler.Instance.IsDarkPanelActive = false;
+        DiaryPanelHandler.Instance.IsDarkPanelActive = false;
     }
 
 
     public void displayMisionPanel()
     {
-        if (Diary.Instance.open) Diary.Instance.displayDiary(Diary.Instance.open);
+        if (DiaryAnimation.Instance.open) DiaryAnimation.Instance.displayDiary(DiaryAnimation.Instance.open);
         Mision4AyudarWinston.SetActive(true);
         CameraHandler.Instance.FirstPersonMode = false;
         LeanTween.alphaCanvas(Mision4AyudarWinston.GetComponent<CanvasGroup>(), 1, 0.3f);
@@ -161,13 +161,13 @@ public class Winston : ElSingleton<Winston>
 
     public IEnumerator secarWinston()
     {
-        PanelHandler.Instance.displayDarkPanel(true);
+        DiaryPanelHandler.Instance.displayDarkPanel(true);
         src.PlayOneShot(sonidoSecar);
         while (src.isPlaying) yield return new WaitForSeconds(1f);
         src.PlayOneShot(sonidoZip);
         while (src.isPlaying) yield return new WaitForSeconds(1f);
         TakingBath = false;
-        PanelHandler.Instance.displayDarkPanel(false);
+        DiaryPanelHandler.Instance.displayDarkPanel(false);
         GameStatus.Instance.Stat.Duchar = 6;
     }
 

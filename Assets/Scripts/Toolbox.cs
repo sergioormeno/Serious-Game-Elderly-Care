@@ -6,7 +6,7 @@ public class Toolbox : MonoBehaviour {
 	public Material material; 
 	public Material material2;
 	public InputHandler handler;  
-	public PanelHandler ph;
+
 
 
 
@@ -14,7 +14,7 @@ public class Toolbox : MonoBehaviour {
 		GetComponent<Renderer> ().material = material2;
 		GetComponent<BoxSound> ().PlaySound (handler.hempty);
 		handler.hempty = true; 
-		if (PanelHandler.Instance.tf2.isOn == true) {
+		if (DiaryPanelHandler.Instance.tf2.isOn == true) {
 			GameStatus.Instance.Stat.Fixing = 3;
 		} 
 

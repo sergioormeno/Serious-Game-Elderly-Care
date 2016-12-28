@@ -5,7 +5,7 @@ public class Fixing : MonoBehaviour {
 	public Material Material;
 	public Material Material2; 
 	public InputHandler handler;
-	public PanelHandler ph;
+
 
 
 

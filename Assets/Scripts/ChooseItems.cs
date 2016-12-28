@@ -16,7 +16,7 @@ public class ChooseItems : MonoBehaviour
 
     public void displayChoosePanel()
     {
-        if (Diary.Instance.open) Diary.Instance.displayDiary(Diary.Instance.open);
+        if (DiaryAnimation.Instance.open) DiaryAnimation.Instance.displayDiary(DiaryAnimation.Instance.open);
         ChooseItemsPanel.SetActive(true);
         LeanTween.alphaCanvas(ChooseItemsPanel.GetComponent<CanvasGroup>(), 1, 0.7f);
         CameraHandler.Instance.FirstPersonMode = false;

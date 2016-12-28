@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class InGameMenú : MonoBehaviour
+public class InGameMenu : MonoBehaviour
 {
     bool menuIsOn = false;
     bool paused = false;
@@ -19,7 +19,6 @@ public class InGameMenú : MonoBehaviour
     [Header("EndGamePanel")]
     public GameObject endGamePanel;
     public Button guardarSalir;
-    public Button exportarHistorial;
     public Button playAgain;
     public Button menuPrincipal;
 
@@ -48,7 +47,7 @@ public class InGameMenú : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Diary.Instance.counter >= 1)
+            if (DiaryAnimation.Instance.counter >= 1)
             {
                 displayInGameMenu(menuIsOn);
             }
@@ -68,7 +67,7 @@ public class InGameMenú : MonoBehaviour
                 break;
             case false:
                 SwitchPaused(paused);
-                if (Diary.Instance.open) Diary.Instance.displayDiary(Diary.Instance.open);
+                if (DiaryAnimation.Instance.open) DiaryAnimation.Instance.displayDiary(DiaryAnimation.Instance.open);
                 CameraHandler.Instance.FirstPersonMode = false;
                 GlobalPanelHandler.Instance.PanelShowUp(menuPanel);
                 GlobalPanelHandler.Instance.HoverShowUp(hoverPanel);
@@ -86,7 +85,7 @@ public class InGameMenú : MonoBehaviour
     {
         while(GameStatus.Instance.Stat.Duchar != 6) yield return new WaitForSeconds(1f);
         yield return new WaitForSeconds(4f);
-        if (Diary.Instance.open) Diary.Instance.displayDiary(Diary.Instance.open);
+        if (DiaryAnimation.Instance.open) DiaryAnimation.Instance.displayDiary(DiaryAnimation.Instance.open);
         CameraHandler.Instance.FirstPersonMode = false;
         hoverPButton.enabled = false;
         GlobalPanelHandler.Instance.HoverShowUp(hoverPanel);

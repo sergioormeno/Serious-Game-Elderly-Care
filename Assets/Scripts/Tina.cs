@@ -7,7 +7,6 @@ public class Tina : MonoBehaviour {
 	public GameObject water; 
 	public AudioClip WaterSound; 
 	public AudioClip WaterSoundOut; 
-	public PanelHandler ph;
 	public WinstonStats ws;
 
 

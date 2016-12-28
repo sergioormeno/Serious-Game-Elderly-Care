@@ -39,12 +39,12 @@ public class GameStatus : ElSingleton<GameStatus>
                     case 1: break;
                     case 2: break;
                     case 3:
-                        PanelHandler.Instance.tt1.isOn = true;
+                        DiaryPanelHandler.Instance.tt1.isOn = true;
                         break;
                     case 4:
                         Instance.FirstBar.SetActive(true);
                         Instance.SecondBar.SetActive(true);
-                        PanelHandler.Instance.tt2.isOn = true;
+                        DiaryPanelHandler.Instance.tt2.isOn = true;
                         break;
                 }
 
@@ -61,14 +61,14 @@ public class GameStatus : ElSingleton<GameStatus>
                 {
                     case 1:
                         showDiaryInCase();
-                        PanelHandler.Instance.tf1.isOn = true;
+                        DiaryPanelHandler.Instance.tf1.isOn = true;
                         break;
                     case 2:
                         showDiaryInCase();
-                        PanelHandler.Instance.tf2.isOn = true;
+                        DiaryPanelHandler.Instance.tf2.isOn = true;
                         break;
                     case 3:
-                        PanelHandler.Instance.tf3.isOn = true;
+                        DiaryPanelHandler.Instance.tf3.isOn = true;
                         break;
                 }
             }
@@ -88,15 +88,15 @@ public class GameStatus : ElSingleton<GameStatus>
                 {
                     case 1:
                         showDiaryInCase();
-                        PanelHandler.Instance.tc1.isOn = true;
+                        DiaryPanelHandler.Instance.tc1.isOn = true;
                         WinstonAnimator.Instance.StartCoroutine(WinstonAnimator.Instance.Sitting());
                         break;
                     case 2:
                         showDiaryInCase();
-                        PanelHandler.Instance.tc2.isOn = true;
+                        DiaryPanelHandler.Instance.tc2.isOn = true;
                         break;
                     case 3:
-                        PanelHandler.Instance.tc3.isOn = true;
+                        DiaryPanelHandler.Instance.tc3.isOn = true;
                         Instance.ShowerMision1Trigger.SetActive(true);
                         break;
                 }
@@ -117,7 +117,7 @@ public class GameStatus : ElSingleton<GameStatus>
                 {
                     case 1:
                         showDiaryInCase();
-                        PanelHandler.Instance.tb1.isOn = true;
+                        DiaryPanelHandler.Instance.tb1.isOn = true;
                         Instance.showerCollider.enabled = true;
                         Instance.ShowerMision2Trigger.SetActive(true);
                         break;
@@ -126,20 +126,20 @@ public class GameStatus : ElSingleton<GameStatus>
                     case 3:
                         showDiaryInCase();
                         Instance.PlayerCheckerM3Trigger.SetActive(true);
-                        PanelHandler.Instance.tb2.isOn = true;
+                        DiaryPanelHandler.Instance.tb2.isOn = true;
 
                         break;
                     case 4:
                         Instance.PlayerCheckerM3Trigger.SetActive(false);
                         showDiaryInCase();
-                        PanelHandler.Instance.tb3.isOn = true;
+                        DiaryPanelHandler.Instance.tb3.isOn = true;
 
                         break;
                     case 5:
                         break;
                     case 6:
                         showDiaryInCase();
-                        PanelHandler.Instance.tb4.isOn = true;
+                        DiaryPanelHandler.Instance.tb4.isOn = true;
                         break;
                     case 7:
                         break;
@@ -159,7 +159,7 @@ public class GameStatus : ElSingleton<GameStatus>
 
         private void showDiaryInCase()
         {
-            if (!Diary.Instance.open) Diary.Instance.displayDiary(Diary.Instance.open);
+            if (!DiaryAnimation.Instance.open) DiaryAnimation.Instance.displayDiary(DiaryAnimation.Instance.open);
         }
     }
 

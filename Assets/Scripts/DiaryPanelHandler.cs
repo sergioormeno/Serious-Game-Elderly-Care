@@ -2,10 +2,10 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class PanelHandler : ElSingleton<PanelHandler>
+public class DiaryPanelHandler : ElSingleton<DiaryPanelHandler>
 {
     public bool isOnAnimation = false;
-    public Diary dr;
+    public DiaryAnimation dr;
     public GameStatus gs;
     public CanvasGroup Ticket;
     public GameObject OpaquePanel;

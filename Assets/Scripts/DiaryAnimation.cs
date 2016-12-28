@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-public class Diary : ElSingleton<Diary>
+public class DiaryAnimation : ElSingleton<DiaryAnimation>
 {
     public GameObject Panel1;
     public GameObject Panel2;

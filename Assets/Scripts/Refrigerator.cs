@@ -27,7 +27,7 @@ public class Refrigerator : MonoBehaviour {
 
     void displayMisionPanel()
     {
-        if (Diary.Instance.open) Diary.Instance.displayDiary(Diary.Instance.open);
+        if (DiaryAnimation.Instance.open) DiaryAnimation.Instance.displayDiary(DiaryAnimation.Instance.open);
         Mision3Panel.SetActive(true);
         CameraHandler.Instance.FirstPersonMode = false;
         LeanTween.alphaCanvas(Mision3Panel.GetComponent<CanvasGroup>(), 1, 0.3f);
