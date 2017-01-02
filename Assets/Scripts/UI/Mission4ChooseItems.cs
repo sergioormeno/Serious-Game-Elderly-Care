@@ -39,14 +39,14 @@ public class Mission4ChooseItems : MonoBehaviour
             GameStatus.Instance.Stat.Duchar = 1;
         });
 
-        t1.onValueChanged.AddListener((b) => { g1.SetActive(true);});
-        t2.onValueChanged.AddListener((b) => { g2.SetActive(true); });
-        t3.onValueChanged.AddListener((b) => { g3.SetActive(true); });
-        t4.onValueChanged.AddListener((b) => { g4.SetActive(true); });
-        t5.onValueChanged.AddListener((b) => { g5.SetActive(true); });
-        t6.onValueChanged.AddListener((b) => { g6.SetActive(true); });
-        t7.onValueChanged.AddListener((b) => { g7.SetActive(true); });
-        t8.onValueChanged.AddListener((b) => { g8.SetActive(true); });
+        t1.onValueChanged.AddListener((b) => g1.SetActive(b));
+        t2.onValueChanged.AddListener((b) => g2.SetActive(b));
+        t3.onValueChanged.AddListener((b) => g3.SetActive(b));
+        t4.onValueChanged.AddListener((b) => g4.SetActive(b));
+        t5.onValueChanged.AddListener((b) => g5.SetActive(b));
+        t6.onValueChanged.AddListener((b) => g6.SetActive(b));
+        t7.onValueChanged.AddListener((b) => g7.SetActive(b));
+        t8.onValueChanged.AddListener((b) => g8.SetActive(b));
     }
 
 }

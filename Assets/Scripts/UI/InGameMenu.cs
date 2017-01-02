@@ -4,23 +4,18 @@ using UnityEngine.UI;
 
 public class InGameMenu : MonoBehaviour
 {
-    bool menuIsOn = false;
-    bool paused = false;
+    bool menuIsOn = false, paused = false;
     [Header("Paneles")]
     public GameObject menuPanel;
     [Header("Buttons")]
-    public Button continuar;
-    public Button exitGame;
-    public Button goMainMenu;
+    public Button continuar, exitGame, goMainMenu;
     [Header("Hover")]
     public GameObject hoverPanel;
     public Button hoverPButton;
 
     [Header("EndGamePanel")]
     public GameObject endGamePanel;
-    public Button guardarSalir;
-    public Button playAgain;
-    public Button menuPrincipal;
+    public Button guardarSalir, playAgain, menuPrincipal;
 
     void Start()
     {

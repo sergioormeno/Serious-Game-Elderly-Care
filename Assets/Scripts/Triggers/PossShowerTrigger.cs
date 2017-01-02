@@ -8,15 +8,8 @@ public class PossShowerTrigger : MonoBehaviour
     {
         if (other.gameObject.tag == "Winston")
         {
-            GameStatus.Instance.Stat.Duchar = 2;
-            Debug.Log(GameStatus.Instance.Stat.Duchar);
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Winston")
-        {
+            GameStatus.Instance.Stat.Duchar = 2;         
+            WinstonAnimator.Instance.readyToShower = true;
             DestroyObject(gameObject);
         }
     }

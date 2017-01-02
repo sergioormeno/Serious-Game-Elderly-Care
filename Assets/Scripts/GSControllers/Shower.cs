@@ -11,6 +11,7 @@ public class Shower : MonoBehaviour {
     public Text _timer;
     string tiempo;
     int t=20;
+    BoxCollider shCollider;
 
     public int T
     {
@@ -26,18 +27,24 @@ public class Shower : MonoBehaviour {
         }
     }
 
+    void Start()
+    {
+        shCollider = GetComponent<BoxCollider>();
+    }
+
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Winston")
         {
             StartCoroutine(DucharWinston());
-            GetComponent<BoxCollider>().enabled = false;
+            shCollider.enabled = false;
         }
     }
 
     public IEnumerator DucharWinston()
     {
         Winston.Instance.TakingBath = true;
+        WinstonAnimator.Instance.StopAgent();
         while (WinstonAnimator.Instance.animator.GetFloat("Speed") != 0) yield return new WaitForSeconds(1f);
         WinstonAnimator.Instance.animator.SetBool("bath", true);
         src.PlayOneShot(_showerSound);
@@ -61,8 +68,7 @@ public class Shower : MonoBehaviour {
     {
         if (other.gameObject.tag == "Winston")
         {
-            GetComponent<BoxCollider>().enabled = false;
-            
+            shCollider.enabled = false;           
 
         }
     }

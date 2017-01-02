@@ -17,11 +17,7 @@ public class Winston : ElSingleton<Winston>
     public GameObject PlatoLleno;
     public GameObject PlatoVacio;
     [HideInInspector]
-    public bool sit = true;
-    [HideInInspector]
-    public bool inPostoBath = false;
-    [HideInInspector]
-    private bool takingBath;
+    public bool sit = true, inPostoBath = false, takingBath=true;
     [Header("Polera y Short")]
     public GameObject shirtNormal;
     public GameObject shirtBlur;
@@ -39,6 +35,7 @@ public class Winston : ElSingleton<Winston>
     private Renderer shortRend;
     [Header("Paneles de Misiones")]
     public GameObject Mision4AyudarWinston;
+    private CanvasGroup M4CanvasGroup; 
 
     public bool TakingBath
     {
@@ -69,6 +66,7 @@ public class Winston : ElSingleton<Winston>
         src = GetComponent<AudioSource>();
         shirtRend = shirtNormal.GetComponent<Renderer>();
         shortRend = shortNormal.GetComponent<Renderer>();
+        M4CanvasGroup = Mision4AyudarWinston.GetComponent<CanvasGroup>(); 
     }
 
     public void Interact()
@@ -83,7 +81,7 @@ public class Winston : ElSingleton<Winston>
     }
 
     void Update()
-    {
+    { 
     }
 
 
@@ -143,7 +141,7 @@ public class Winston : ElSingleton<Winston>
         WinstonStats.Instance.myProp.estomago = 100;
         if (WinstonStats.Instance.myProp.estomago == 0)
         {
-            StartCoroutine(ws.hungerControl());
+            StartCoroutine(ws.sacietyControl());
         }
         PlatoLleno.SetActive(false);
         PlatoVacio.GetComponent<MeshRenderer>().enabled = true;
@@ -156,9 +154,9 @@ public class Winston : ElSingleton<Winston>
         if (DiaryAnimation.Instance.open) DiaryAnimation.Instance.displayDiary(DiaryAnimation.Instance.open);
         Mision4AyudarWinston.SetActive(true);
         CameraHandler.Instance.FirstPersonMode = false;
-        LeanTween.alphaCanvas(Mision4AyudarWinston.GetComponent<CanvasGroup>(), 1, 0.3f);
+        LeanTween.alphaCanvas(M4CanvasGroup, 1, 0.3f);
     }
-
+    
     public IEnumerator secarWinston()
     {
         DiaryPanelHandler.Instance.displayDarkPanel(true);

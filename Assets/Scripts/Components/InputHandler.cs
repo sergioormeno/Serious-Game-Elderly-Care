@@ -9,8 +9,8 @@ public class InputHandler : MonoBehaviour
     public bool hempty = true;
     private float timeStamp;
     private GameObject obj;
-
     public GameStatus gs;
+    private Camera cam;
 
 
 
@@ -20,39 +20,43 @@ public class InputHandler : MonoBehaviour
     {
         x = Screen.width / 2;
         y = Screen.height / 2;
+        cam = GetComponent<Camera>();
     }
 
     void Update()
     {
         // Acciones
-        if (Input.GetMouseButton(0))
+        if (!DiaryPanelHandler.Instance.isOnAnimation)
         {
-            Ray ray = GetComponent<Camera>().ScreenPointToRay(new Vector3(x, y));
-            RaycastHit rayCastHit;
-
-            if (timeStamp <= Time.time)
+            if (Input.GetMouseButton(0))
             {
-                timeStamp = Time.time + 1;
-                if (Physics.Raycast(ray.origin, ray.direction, out rayCastHit, Mathf.Infinity))
+                Ray ray = cam.ScreenPointToRay(new Vector3(x, y));
+                RaycastHit rayCastHit;
+
+                if (timeStamp <= Time.time)
                 {
-                    obj = rayCastHit.collider.gameObject;
-                    InteractHandler(gs.Stat.overall, obj);
+                    timeStamp = Time.time + 1;
+                    if (Physics.Raycast(ray.origin, ray.direction, out rayCastHit, Mathf.Infinity))
+                    {
+                        obj = rayCastHit.collider.gameObject;
+                        InteractHandler(gs.Stat.overall, obj);
+                    }
                 }
             }
-        }
 
-        if (Input.GetMouseButton(1))
-        {
-            Ray ray = GetComponent<Camera>().ScreenPointToRay(new Vector3(x, y));
-            RaycastHit rayCastHit;
-
-            if (timeStamp <= Time.time)
+            if (Input.GetMouseButton(1))
             {
-                timeStamp = Time.time + 1;
-                if (Physics.Raycast(ray.origin, ray.direction, out rayCastHit, Mathf.Infinity))
+                Ray ray = cam.ScreenPointToRay(new Vector3(x, y));
+                RaycastHit rayCastHit;
+
+                if (timeStamp <= Time.time)
                 {
-                    obj = rayCastHit.collider.gameObject;
-                    obj.SendMessage("Help", null, SendMessageOptions.DontRequireReceiver);
+                    timeStamp = Time.time + 1;
+                    if (Physics.Raycast(ray.origin, ray.direction, out rayCastHit, Mathf.Infinity))
+                    {
+                        obj = rayCastHit.collider.gameObject;
+                        obj.SendMessage("Help", null, SendMessageOptions.DontRequireReceiver);
+                    }
                 }
             }
         }

@@ -49,14 +49,14 @@ public class WinstonStats : ElSingleton<WinstonStats>
 
     void Awake()
     {
-        StartCoroutine(hungerControl());
+        StartCoroutine(sacietyControl());
         StartCoroutine(higControl());
         StartCoroutine(vejigaControl());
         //		StartCoroutine (saludControl ());
         wins = gameObject.GetComponent<Winston>();
     }
 
-    public IEnumerator hungerControl()
+    public IEnumerator sacietyControl()
     {
 
         while (myProp.estomago > 0)

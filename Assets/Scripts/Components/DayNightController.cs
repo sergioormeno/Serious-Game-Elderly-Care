@@ -143,9 +143,6 @@ public class DayNightController : MonoBehaviour {
 		}
 		//Make the final string
 		timeString = Mathf.Floor(currentTime).ToString() + " : " + minutes.ToString("F0") + " "+AMPM ;
-
-
-
 	}
 
 }
