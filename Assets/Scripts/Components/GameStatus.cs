@@ -5,9 +5,7 @@ public class GameStatus : ElSingleton<GameStatus>
 {
     static bool _onceCaled = false;
     [HideInInspector]
-    public bool bar1 = false;
-    [HideInInspector]
-    public bool bar2 = false;
+    public bool bar1 = false, bar2 = false, findeljuego = false;
     [Header("Barras")]
     public GameObject FirstBar;
     public GameObject SecondBar;
@@ -17,6 +15,7 @@ public class GameStatus : ElSingleton<GameStatus>
     public GameObject PlayerCheckerM3Trigger;
     [Header("Colliders")]
     public BoxCollider showerCollider;
+
 
     public class Status
     {
@@ -140,6 +139,7 @@ public class GameStatus : ElSingleton<GameStatus>
                     case 6:
                         showDiaryInCase();
                         DiaryPanelHandler.Instance.tb4.isOn = true;
+                        Instance.findeljuego = true;
                         break;
                     case 7:
                         break;

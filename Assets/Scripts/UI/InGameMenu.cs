@@ -78,13 +78,15 @@ public class InGameMenu : MonoBehaviour
 
     public IEnumerator EndGameChecker()
     {
-        while(GameStatus.Instance.Stat.Duchar != 6) yield return new WaitForSeconds(1f);
+        while(!GameStatus.Instance.findeljuego) yield return new WaitForSeconds(1f);
         yield return new WaitForSeconds(4f);
         if (DiaryAnimation.Instance.open) DiaryAnimation.Instance.displayDiary(DiaryAnimation.Instance.open);
         CameraHandler.Instance.FirstPersonMode = false;
         hoverPButton.enabled = false;
         GlobalPanelHandler.Instance.HoverShowUp(hoverPanel);
         GlobalPanelHandler.Instance.PanelShowUp(endGamePanel);
+        WinstonStats.Instance.StopAllCoroutines();
+        Time.timeScale = 0;
     }
 
     public void SaveExit()
