@@ -3,10 +3,8 @@ using System.Collections;
 
 public class Winston : ElSingleton<Winston>
 {
-    public GameStatus gs;
     public int hungry = 0;
     public int dirty = 0;
-    public WinstonStats ws;
     [Header("Sounds")]
     [HideInInspector]
     public AudioSource src;
@@ -17,7 +15,7 @@ public class Winston : ElSingleton<Winston>
     public GameObject PlatoLleno;
     public GameObject PlatoVacio;
     [HideInInspector]
-    public bool sit = true, inPostoBath = false, takingBath=true;
+    public bool sit = true, inPostoBath = false, takingBath = true;
     [Header("Polera y Short")]
     public GameObject shirtNormal;
     public GameObject shirtBlur;
@@ -35,11 +33,20 @@ public class Winston : ElSingleton<Winston>
     private Renderer shortRend;
     [Header("Paneles de Misiones")]
     public GameObject Mision4AyudarWinston;
-    private CanvasGroup M4CanvasGroup; 
+    private CanvasGroup M4CanvasGroup;
+
+
+    //Referencias a otros componentes
+    GameStatus gs;
+    CameraHandler ch;
+    DiaryPanelHandler dph;
+    DiaryAnimation da;
+    WinstonAnimator wa;
+    WinstonStats ws;
 
     public bool TakingBath
     {
-        get{return takingBath;}
+        get { return takingBath; }
         set
         {
             takingBath = value;
@@ -66,7 +73,14 @@ public class Winston : ElSingleton<Winston>
         src = GetComponent<AudioSource>();
         shirtRend = shirtNormal.GetComponent<Renderer>();
         shortRend = shortNormal.GetComponent<Renderer>();
-        M4CanvasGroup = Mision4AyudarWinston.GetComponent<CanvasGroup>(); 
+        M4CanvasGroup = Mision4AyudarWinston.GetComponent<CanvasGroup>();
+
+        ws = WinstonStats.Instance;
+        wa = WinstonAnimator.Instance;
+        dph = DiaryPanelHandler.Instance;
+        gs = GameStatus.Instance;
+        ch = CameraHandler.Instance;
+        da = DiaryAnimation.Instance;
     }
 
     public void Interact()
@@ -81,7 +95,7 @@ public class Winston : ElSingleton<Winston>
     }
 
     void Update()
-    { 
+    {
     }
 
 
@@ -89,34 +103,34 @@ public class Winston : ElSingleton<Winston>
     {
         if (sit)
         {
-            if (GameStatus.Instance.Stat.Tutorial == 3)
+            if (gs.Stat.Tutorial == 3)
             {
-                WinstonAnimator.Instance.Stand();
-                GameStatus.Instance.Stat.Tutorial = 4;
+                wa.Stand();
+                gs.Stat.Tutorial = 4;
             }
 
-            if (GameStatus.Instance.Stat.Duchar == 1)
+            if (gs.Stat.Duchar == 1)
             {
-                WinstonAnimator.Instance.Stand();
-                StartCoroutine(WinstonAnimator.Instance.GotoBathroom());
+                wa.Stand();
+                StartCoroutine(wa.GotoBathroom());
+                gs.playerActions.Actions = "El jugador ayudó a Winston a levantarse y a llegar a la ducha";
             }
 
         }
         else
         {
-            Debug.Log("else");
-            switch (GameStatus.Instance.Stat.Duchar)
+            switch (gs.Stat.Duchar)
             {
                 case 1:
-                    StartCoroutine(WinstonAnimator.Instance.GotoBathroom());
+                    gs.playerActions.Actions = "El jugador ayudo a llegar a la ducha a Winston";
+                    StartCoroutine(wa.GotoBathroom());
                     break;
                 case 2:
                     displayMisionPanel();
-                    GameStatus.Instance.pActions.Actions = "Para ayudar a Winston a entrar a la ducha, el orden de acciones que toma son:";
+                    gs.playerActions.Actions = "Para ayudar a Winston a entrar a la ducha, el orden de acciones que toma son:";
                     break;
                 case 4:
-                    StartCoroutine(WinstonAnimator.Instance.HelpWinstonLeaveBath());
-                    Debug.Log("called help leave");
+                    StartCoroutine(wa.HelpWinstonLeaveBath());
                     break;
                 case 5:
                     StartCoroutine(secarWinston());
@@ -134,39 +148,39 @@ public class Winston : ElSingleton<Winston>
     {
         PlatoLleno.SetActive(true);
         yield return new WaitForSeconds(2f);
-        DiaryPanelHandler.Instance.IsDarkPanelActive = true;
+        dph.IsDarkPanelActive = true;
         src.PlayOneShot(_eatingSound);
         yield return new WaitForSeconds(4f);
         src.Stop();
-        WinstonStats.Instance.myProp.estomago = 100;
-        if (WinstonStats.Instance.myProp.estomago == 0)
+        ws.myProp.estomago = 100;
+        if (ws.myProp.estomago == 0)
         {
             StartCoroutine(ws.sacietyControl());
         }
         PlatoLleno.SetActive(false);
         PlatoVacio.GetComponent<MeshRenderer>().enabled = true;
-        DiaryPanelHandler.Instance.IsDarkPanelActive = false;
+        dph.IsDarkPanelActive = false;
     }
 
 
     public void displayMisionPanel()
     {
-        if (DiaryAnimation.Instance.open) DiaryAnimation.Instance.displayDiary(DiaryAnimation.Instance.open);
+        if (da.open) da.displayDiary(da.open);
         Mision4AyudarWinston.SetActive(true);
-        CameraHandler.Instance.FirstPersonMode = false;
+        ch.FirstPersonMode = false;
         LeanTween.alphaCanvas(M4CanvasGroup, 1, 0.3f);
     }
-    
+
     public IEnumerator secarWinston()
     {
-        DiaryPanelHandler.Instance.displayDarkPanel(true);
+        dph.displayDarkPanel(true);
         src.PlayOneShot(sonidoSecar);
         while (src.isPlaying) yield return new WaitForSeconds(1f);
         src.PlayOneShot(sonidoZip);
         while (src.isPlaying) yield return new WaitForSeconds(1f);
         TakingBath = false;
-        DiaryPanelHandler.Instance.displayDarkPanel(false);
-        GameStatus.Instance.Stat.Duchar = 6;
+        dph.displayDarkPanel(false);
+        gs.Stat.Duchar = 6;
     }
 
 

@@ -11,7 +11,15 @@ public class Shower : MonoBehaviour {
     public Text _timer;
     string tiempo;
     int t=20;
+
     BoxCollider shCollider;
+    GameStatus gs;
+    DiaryAnimation da;
+    WinstonAnimator wa;
+    WinstonStats ws;
+    Winston w;
+
+
 
     public int T
     {
@@ -30,6 +38,10 @@ public class Shower : MonoBehaviour {
     void Start()
     {
         shCollider = GetComponent<BoxCollider>();
+        ws = WinstonStats.Instance;
+        wa = WinstonAnimator.Instance;
+        gs = GameStatus.Instance;
+        w = Winston.Instance;
     }
 
     public void OnTriggerEnter(Collider other)
@@ -43,10 +55,10 @@ public class Shower : MonoBehaviour {
 
     public IEnumerator DucharWinston()
     {
-        Winston.Instance.TakingBath = true;
-        WinstonAnimator.Instance.StopAgent();
-        while (WinstonAnimator.Instance.animator.GetFloat("Speed") != 0) yield return new WaitForSeconds(1f);
-        WinstonAnimator.Instance.animator.SetBool("bath", true);
+        w.TakingBath = true;
+        wa.StopAgent();
+        while (wa.animator.GetFloat("Speed") != 0) yield return new WaitForSeconds(1f);
+        wa.animator.SetBool("bath", true);
         src.PlayOneShot(_showerSound);
         ShowerFountain.SetActive(true);
         _timer.enabled = true;
@@ -58,9 +70,9 @@ public class Shower : MonoBehaviour {
         }        
         src.Stop();
         incrementarHigiene();
-        WinstonAnimator.Instance.animator.SetBool("bath", false);
+        wa.animator.SetBool("bath", false);
         ShowerFountain.SetActive(false);
-        GameStatus.Instance.Stat.Duchar = 4;
+        gs.Stat.Duchar = 4;
         _timer.enabled = false;
     }
 
@@ -75,17 +87,17 @@ public class Shower : MonoBehaviour {
 
     public void incrementarHigiene()
     {
-        if (WinstonStats.Instance.myProp.higiene == 0)
+        if (ws.myProp.higiene == 0)
         {
-            WinstonStats.Instance.myProp.higiene = 100;
-            Winston.Instance.dirty = 0;
-            Winston.Instance.StartCoroutine(WinstonStats.Instance.higControl());
+            ws.myProp.higiene = 100;
+            w.dirty = 0;
+            StartCoroutine(ws.higControl());
 
         }
         else
         {
-            WinstonStats.Instance.myProp.higiene = WinstonStats.Instance.myProp.higiene + (100 - WinstonStats.Instance.myProp.higiene);
-            GameStatus.Instance.Stat.Duchar = 0;
+            ws.myProp.higiene = ws.myProp.higiene + (100 - ws.myProp.higiene);
+            gs.Stat.Duchar = 0;
         }
     }
 

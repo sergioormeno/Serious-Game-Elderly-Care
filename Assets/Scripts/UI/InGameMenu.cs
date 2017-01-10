@@ -17,14 +17,29 @@ public class InGameMenu : MonoBehaviour
     public GameObject endGamePanel;
     public Button guardarSalir, playAgain, menuPrincipal;
 
+    GlobalPanelHandler ph;
+    SCManager sm;
+    CameraHandler ch;
+    WinstonStats ws;
+    DiaryAnimation da;
+    GameStatus gs;
+
     void Start()
     {
+        ph = GlobalPanelHandler.Instance;
+        sm = SCManager.Instance;
+        ch = CameraHandler.Instance;
+        ws = WinstonStats.Instance;
+        gs = GameStatus.Instance;
+        da = DiaryAnimation.Instance;
+
+
         continuar.onClick.AddListener(() =>
         {
             displayInGameMenu(menuIsOn);
         });
 
-        goMainMenu.onClick.AddListener(() => SCManager.Instance.LoadScene(SCManager.Instance.ReturnLastSceneName()));
+        goMainMenu.onClick.AddListener(() => sm.LoadScene(sm.ReturnLastSceneName()));
 
         exitGame.onClick.AddListener(() => Application.Quit());
 
@@ -32,9 +47,9 @@ public class InGameMenu : MonoBehaviour
 
         guardarSalir.onClick.AddListener(() => SaveExit());
 
-        playAgain.onClick.AddListener(() => SCManager.Instance.LoadScene("game1"));
+        playAgain.onClick.AddListener(() => sm.LoadScene("game1"));
 
-        menuPrincipal.onClick.AddListener(() => SCManager.Instance.LoadScene("start"));
+        menuPrincipal.onClick.AddListener(() => sm.LoadScene("start"));
     }
 
 
@@ -42,7 +57,7 @@ public class InGameMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (DiaryAnimation.Instance.counter >= 1)
+            if (da.counter >= 1)
             {
                 displayInGameMenu(menuIsOn);
             }
@@ -55,17 +70,17 @@ public class InGameMenu : MonoBehaviour
         {
             case true:
                 SwitchPaused(paused);
-                CameraHandler.Instance.FirstPersonMode = true;
-                GlobalPanelHandler.Instance.HoverShowOff(hoverPanel);
-                GlobalPanelHandler.Instance.PanelShowOff();
+                ch.FirstPersonMode = true;
+                ph.HoverShowOff(hoverPanel);
+                ph.PanelShowOff();
                 menuIsOn = false;
                 break;
             case false:
                 SwitchPaused(paused);
-                if (DiaryAnimation.Instance.open) DiaryAnimation.Instance.displayDiary(DiaryAnimation.Instance.open);
-                CameraHandler.Instance.FirstPersonMode = false;
-                GlobalPanelHandler.Instance.PanelShowUp(menuPanel);
-                GlobalPanelHandler.Instance.HoverShowUp(hoverPanel);
+                if (da.open) da.displayDiary(da.open);
+                ch.FirstPersonMode = false;
+                ph.PanelShowUp(menuPanel);
+                ph.HoverShowUp(hoverPanel);
                 menuIsOn = true;
                 break;
         }
@@ -78,15 +93,14 @@ public class InGameMenu : MonoBehaviour
 
     public IEnumerator EndGameChecker()
     {
-        while(!GameStatus.Instance.findeljuego) yield return new WaitForSeconds(1f);
+        while(!gs.endGame) yield return new WaitForSeconds(1f);
         yield return new WaitForSeconds(4f);
-        if (DiaryAnimation.Instance.open) DiaryAnimation.Instance.displayDiary(DiaryAnimation.Instance.open);
-        CameraHandler.Instance.FirstPersonMode = false;
+        if (da.open) da.displayDiary(da.open);
+        ch.FirstPersonMode = false;
         hoverPButton.enabled = false;
-        GlobalPanelHandler.Instance.HoverShowUp(hoverPanel);
-        GlobalPanelHandler.Instance.PanelShowUp(endGamePanel);
-        WinstonStats.Instance.StopAllCoroutines();
-        Time.timeScale = 0;
+        ph.HoverShowUp(hoverPanel);
+        ph.PanelShowUp(endGamePanel);
+        ws.StopAllCoroutines();
     }
 
     public void SaveExit()

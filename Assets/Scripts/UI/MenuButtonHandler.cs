@@ -9,8 +9,9 @@ public class MenuButtonHandler : MonoBehaviour
     public Button historialButton;
     public Button exitButton;
     [Header("Botones Jugar Partida")]
-    public Button sgAceptButton;
-    public Button sgCancelButton;
+    public Button ngAceptButton;
+    public Button ngCancelButton;
+    public Button ngNewUser;
 
     [Header("Panels")]
     public GameObject JugarPartidaPanel;
@@ -19,21 +20,27 @@ public class MenuButtonHandler : MonoBehaviour
     [Header("Hover")]
     public GameObject HoverPanel;
     public Button HoverButton;
-    
+
+    [Header("DropdownMenúPlayers")]
+    public Dropdown playersDrops;
 
 
     // Use this for initialization
     void Start()
     {
+        GlobalPanelHandler ph = GlobalPanelHandler.Instance;
+        DataBaseHandler db = DataBaseHandler.Instance;
+        SCManager sm = SCManager.Instance;
+
         startGameButton.onClick.AddListener(() =>
         {
-            GlobalPanelHandler.Instance.HoverShowUp(HoverPanel);
-            GlobalPanelHandler.Instance.PanelShowUp(JugarPartidaPanel);
+            ph.HoverShowUp(HoverPanel);
+            ph.PanelShowUp(JugarPartidaPanel);
         });
         historialButton.onClick.AddListener(() =>
          {
-             GlobalPanelHandler.Instance.HoverShowUp(HoverPanel);
-             GlobalPanelHandler.Instance.PanelShowUp(Historial);
+            ph.HoverShowUp(HoverPanel);
+            ph.PanelShowUp(Historial);
          });
 
         exitButton.onClick.AddListener(() =>
@@ -41,24 +48,34 @@ public class MenuButtonHandler : MonoBehaviour
             Application.Quit();
         });
 
-        sgCancelButton.onClick.AddListener(() =>
-        {
-            GlobalPanelHandler.Instance.HoverShowOff(HoverPanel);
-            GlobalPanelHandler.Instance.PanelShowOff();
-           
-        });
-
        HoverButton.onClick.AddListener(() =>
        {
-           GlobalPanelHandler.Instance.HoverShowOff(HoverPanel);
-           GlobalPanelHandler.Instance.PanelShowOff();
+          ph.HoverShowOff(HoverPanel);
+          ph.PanelShowOff();
 
        });
 
-        sgAceptButton.onClick.AddListener(() =>
+        ngAceptButton.onClick.AddListener(() =>
         {
-            SCManager.Instance.LoadScene("game1");
+            db.CreateGame("Game1");
+            sm.LoadScene("game1");
         });
+
+        ngCancelButton.onClick.AddListener(() =>
+        {
+            ph.HoverShowOff(HoverPanel);
+            ph.PanelShowOff();            
+        });
+
+       db.UpdatePlayersDropdown(playersDrops);
+
+        ngNewUser.onClick.AddListener(() =>
+        {
+            ph.PanelShowUp(NewUser);
+        });
+
+        
+
 
     }
 

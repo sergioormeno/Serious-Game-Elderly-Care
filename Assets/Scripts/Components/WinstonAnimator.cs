@@ -15,12 +15,16 @@ public class WinstonAnimator : ElSingleton<WinstonAnimator>
     public Transform platoDeComida;
     public bool readyToEat = false;
     public bool readyToShower = false;
+    GameStatus gs;
+    Winston w;
 
 
     void Start()
     {
         animator = GetComponent<Animator>();
         agente = GetComponent<NavMeshAgent>();
+        gs = GameStatus.Instance;
+        w = Winston.Instance;
     }
 
     void OnAnimatorMove()
@@ -65,19 +69,19 @@ public class WinstonAnimator : ElSingleton<WinstonAnimator>
 
     public void Stand()
     {
-        Winston.Instance.sit = false;
+        w.sit = false;
         animator.SetBool("sit", false);
     }
 
     public void Sit()
     {
-        Winston.Instance.sit = true;
+        w.sit = true;
         animator.SetBool("sit", true);
     }
 
     public IEnumerator GotoBathroom()
     {
-        if (!Winston.Instance.sit) yield return new WaitForSeconds(4.5f);
+        yield return new WaitForSeconds(6);
         agente.ResetPath();
         agente.destination = showerPos1.position;
         while (!readyToShower) yield return new WaitForSeconds(1f);
@@ -91,14 +95,17 @@ public class WinstonAnimator : ElSingleton<WinstonAnimator>
         yield return new WaitForSeconds(1f);
         agente.ResetPath();
         agente.destination = showerPos1.position;
-        GameStatus.Instance.Stat.Duchar = 5;
+        gs.Stat.Duchar = 5;
+        if (!gs.towelonChooseItems) gs.endGame = true;
+        yield return new WaitForSeconds(1f);
+
     }
 
     public void EnterShower()
     {
         agente.ResetPath();
         agente.destination = showerPos2.position;
-        GameStatus.Instance.Stat.Duchar = 3;
+        gs.Stat.Duchar = 3;
     }
 
     public void StopAgent()

@@ -3,9 +3,9 @@ using System.Collections;
 
 public class GameStatus : ElSingleton<GameStatus>
 {
-    static bool _onceCaled = false;
+    public bool towelonChooseItems = true;
     [HideInInspector]
-    public bool bar1 = false, bar2 = false, findeljuego = false;
+    public bool bar1 = false, bar2 = false, endGame = false;
     [Header("Barras")]
     public GameObject FirstBar;
     public GameObject SecondBar;
@@ -39,11 +39,13 @@ public class GameStatus : ElSingleton<GameStatus>
                     case 2: break;
                     case 3:
                         DiaryPanelHandler.Instance.tt1.isOn = true;
+                        Instance.playerActions.Actions = "El jugador ha abierto todas las puertas, explorando todas las habitaciones";
                         break;
                     case 4:
                         Instance.FirstBar.SetActive(true);
                         Instance.SecondBar.SetActive(true);
                         DiaryPanelHandler.Instance.tt2.isOn = true;
+                        Instance.playerActions.Actions = "El jugador ha ayudado a levantarse a Winston";
                         break;
                 }
 
@@ -129,17 +131,16 @@ public class GameStatus : ElSingleton<GameStatus>
 
                         break;
                     case 4:
-                        Instance.PlayerCheckerM3Trigger.SetActive(false);
+                        if(Instance.PlayerCheckerM3Trigger) Instance.PlayerCheckerM3Trigger.SetActive(false);
                         showDiaryInCase();
                         DiaryPanelHandler.Instance.tb3.isOn = true;
-
                         break;
                     case 5:
                         break;
                     case 6:
                         showDiaryInCase();
                         DiaryPanelHandler.Instance.tb4.isOn = true;
-                        Instance.findeljuego = true;
+                        Instance.endGame = true;
                         break;
                     case 7:
                         break;
@@ -173,35 +174,12 @@ public class GameStatus : ElSingleton<GameStatus>
             set
             {
                 actions = actions + "\n" + value;
+                DataBaseHandler.Instance.AgregarAccionBD(value);
             }
         }
     }
 
-    public enum TypeOfAction
-    {
-        Tutorial,
-        Fixing,
-        Cocinar,
-        Duchar,
-        Lavaropa,
-        Medicina,
-        Toilet,
-    }
-
-
     public Status Stat = new Status(1, 0, 0, 0, 0);
-    public PlayerActions pActions = new PlayerActions();
+    public PlayerActions playerActions = new PlayerActions();
 
-    void Awake()
-    {
-        if (!_onceCaled)
-        {
-            DontDestroyOnLoad(gameObject);
-            _onceCaled = true;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 }

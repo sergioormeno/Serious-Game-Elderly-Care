@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class WinstonStats : ElSingleton<WinstonStats>
 {
 
-    public GameStatus gs;
     public Text hambreText;
     public Text higieneText;
     public Text socialText;
@@ -13,6 +12,8 @@ public class WinstonStats : ElSingleton<WinstonStats>
     public Text vejigaText;
     public Winston wins;
     public bool conscious = true;
+
+    GameStatus gs;
 
     public class Propiedades
     {
@@ -44,6 +45,7 @@ public class WinstonStats : ElSingleton<WinstonStats>
         saludText.text = myProp.salud.ToString();
         socialText.text = myProp.social.ToString();
         vejigaText.text = myProp.social.ToString();
+        gs = GameStatus.Instance;
     }
 
 
@@ -63,8 +65,9 @@ public class WinstonStats : ElSingleton<WinstonStats>
         {
             myProp.estomago = myProp.estomago - 1;
             hambreText.text = myProp.estomago.ToString(); //debug
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(2.5f);
         }
+        gs.playerActions.Actions = "Winston se encuentra hambriento, el jugador no ha prestado atención a sus necesidades";
         GetComponent<Winston>().hungry = 1;
 
     }
@@ -77,6 +80,7 @@ public class WinstonStats : ElSingleton<WinstonStats>
             higieneText.text = myProp.higiene.ToString();
             yield return new WaitForSeconds(1.5f);
         }
+        gs.playerActions.Actions = "Winston se encuentra sucio, el jugador no ha  prestado atención a su higiene";
         wins.dirty = wins.dirty + 1;
     }
 
@@ -89,9 +93,9 @@ public class WinstonStats : ElSingleton<WinstonStats>
             if (myProp.salud < 0)
             {
                 myProp.salud = 0;
-                Debug.Log("winston se ha desmayado");
+                gs.playerActions.Actions = "Winston se ha desmayado por el descuido del jugador";
                 conscious = false;
-                StopAllCoroutines();
+                gs.endGame = true;
             }
             yield return new WaitForSeconds(1f);
         }
@@ -104,7 +108,7 @@ public class WinstonStats : ElSingleton<WinstonStats>
         {
             myProp.vejiga = myProp.vejiga - 1;
             vejigaText.text = myProp.vejiga.ToString();
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(3f);
         }
 
         while (myProp.vejiga == 0)

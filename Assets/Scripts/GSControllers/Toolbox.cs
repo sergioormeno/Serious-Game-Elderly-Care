@@ -11,11 +11,14 @@ public class Toolbox : MonoBehaviour
     public AudioClip pick, drop;
     private AudioSource src;
 
+    GameStatus gs;
+
 
     void Start()
     {
         rend = GetComponent<Renderer>();
         src = GetComponent<AudioSource>();
+        gs = GameStatus.Instance;
     }
 
     void Install()
@@ -23,26 +26,17 @@ public class Toolbox : MonoBehaviour
         rend.material = material2;
         src.PlayOneShot(drop);
         handler.hempty = true;
-        if (DiaryPanelHandler.Instance.tf2.isOn == true)
-        {
-            GameStatus.Instance.Stat.Fixing = 3;
-        }
-
+       gs.playerActions.Actions = "El jugador ha dejado las herramientas";
+        if (gs.Stat.Fixing == 2) gs.Stat.Fixing = 3;
     }
 
     void Interact()
     {
-        if (!GameStatus.Instance.bar1 || !GameStatus.Instance.bar2)
-        {
-            rend.material = material;
-            src.PlayOneShot(pick);
-            handler.hempty = false;
-            GameStatus.Instance.Stat.Fixing = 1;
-        }
-        else
-        {
-            Debug.Log("Ya haz instalado las barras");
+        rend.material = material;
+        src.PlayOneShot(pick);
+        handler.hempty = false;
+        gs.playerActions.Actions = "El jugador ha tomado las herramientas";
+        if (gs.Stat.Fixing == 0) gs.Stat.Fixing = 1;
 
-        }
     }
 }

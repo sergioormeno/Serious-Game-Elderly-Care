@@ -46,7 +46,7 @@ public class Mision3Handler : MonoBehaviour
 
     private void buttonFunctionPanel1(Button b)
     {
-        GameStatus.Instance.pActions.Actions = "Ha seleccionado" + b.GetComponentInChildren<Text>().text;
+        GameStatus.Instance.playerActions.Actions = "Ha seleccionado" + b.GetComponentInChildren<Text>().text + " como plato principal";
         LeanTween.alphaCanvas(p1.GetComponent<CanvasGroup>(), 0, 0.25f);
         p1.SetActive(false);
         p2.SetActive(true);
@@ -55,7 +55,7 @@ public class Mision3Handler : MonoBehaviour
 
     private void buttonFunctionPanel2(Button b)
     {
-        GameStatus.Instance.pActions.Actions = "Ha seleccionado" + b.GetComponentInChildren<Text>().text;
+        GameStatus.Instance.playerActions.Actions = "Ha seleccionado" + b.GetComponentInChildren<Text>().text + " como ensalada";
         LeanTween.alphaCanvas(p2.GetComponent<CanvasGroup>(), 0, 0.25f);
         p2.SetActive(false);
         p3.SetActive(true);
@@ -64,7 +64,7 @@ public class Mision3Handler : MonoBehaviour
 
     private void buttonFunctionPanel3(Button b)
     {
-        GameStatus.Instance.pActions.Actions = "Ha seleccionado" + b.GetComponentInChildren<Text>().text;
+        GameStatus.Instance.playerActions.Actions = "Ha seleccionado" + b.GetComponentInChildren<Text>().text + " como liquido";
         LeanTween.alphaCanvas(gameObject.GetComponent<CanvasGroup>(), 0, 0.4f).setOnComplete(() => {
             closeMisionPanel();
         });

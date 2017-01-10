@@ -1,17 +1,17 @@
-﻿using UnityEngine;
+﻿using UnityEngine.UI;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class DataBaseHandler : ElSingleton<DataBaseHandler> {
     private int id_jugador;
     private int id_partida;
-    public List<string> acciones;
+    private int id_jugadorHistorial;
+    private int id_partidaHistorial;    
+    public int actionNumber = 0;
+    public Dropdown dropRef;
+    public Dropdown dropRefH;
 
-    private bool _onceCalled = false;
-    
-    // Use this for initialization
-    void Start () {
-     
-    }
+    static bool _onceCalled = false;
 
     void Awake()
     {
@@ -26,35 +26,85 @@ public class DataBaseHandler : ElSingleton<DataBaseHandler> {
         }
     }
 
-
- 
-    public void CreateInfoGame(int id_j, int id_p)
-    {
-        id_jugador = id_j;
-        id_partida = id_p; 
+    // Use this for initialization
+    void Start () {
+     
     }
 
+   
 
-    public void AgregarAccionesBD()
+    void Update()
     {
-        var ds = new DataService("juegoserio.db");
-        foreach (string element in acciones)
-        {
-            ds.AddAction(element,id_jugador,id_partida);
-        }
-        ds = null;
+        if (Input.GetKeyDown(KeyCode.P)) Debug.Log("id jugador: "+id_jugador +" id partida:"+ id_partida);
+    }
+ 
+
+    public void AgregarAccionBD(string name)
+    {
+        actionNumber++;
+        var ds = dsConnect(); 
+        ds.AddAction(name,id_jugador,id_partida,actionNumber);
+        
     }
 
     public void CreateNewPlayer(string nick, string n, string a, int e, string m)
     {
-        var ds = new DataService("juegoserio.db");
-        ds.CreateJugador(nick, n, a, e, m);
-        ds = null;
+        var ds = dsConnect();
+        ds.CreatePlayer(nick, n, a, e, m);
     }
 
-    public void CrearPartida(string n)
+    public void CreateGame(string n)
     {
-        var ds = new DataService("juegoserio.db");
-        ds.CreateGame(n, id_jugador);
+        var ds = dsConnect();
+        ClearActionsOrders();
+        id_jugador = GetPlayerIDByNick(dropRef.captionText.text);
+        id_partida = ds.CreateGame(n, id_jugador).id;
+    }
+
+    public void UpdatePlayersDropdown(Dropdown drops)
+    {
+        drops.ClearOptions();
+        dropRef = drops;
+        var ds = dsConnect();
+        drops.AddOptions(ds.GetPlayersNicks());
+    }
+
+    public void UpdatePlayersDropdownHistorial(Dropdown drops)
+    {
+        drops.ClearOptions();
+        dropRef = drops;
+        var ds = dsConnect();
+        drops.AddOptions(ds.GetPlayersNicks());
+    }
+
+    public void UpdateGamesDropdown(string t, Dropdown drops)
+    {
+        drops.ClearOptions();
+        dropRefH = drops; 
+        var ds = dsConnect();
+        Jugador p = ds.GetPlayerByNick(t);
+        drops.AddOptions(ds.GetPlayersGames(p.id));
+    }
+
+    public int GetPlayerIDByNick(string nick)
+    {
+        var ds = dsConnect();
+        return ds.GetPlayerByNick(nick).id;
+    }
+
+    public void ClearActionsOrders()
+    {
+        actionNumber = 0;
+    }
+
+    public void UpdateScoreInDB()
+    {
+        var ds = dsConnect();
+        ds.AddPlayerScore(PlayerScoreHandler.Instance.Puntaje, id_jugador, id_partida);
+    }
+
+    public DataService dsConnect()
+    {
+        return new DataService("jugadores.db");
     }
 }

@@ -36,6 +36,7 @@ public class Fixing : MonoBehaviour
                 rend.material = Material2;
                 GameStatus.Instance.bar2 = true;
                 GameStatus.Instance.Stat.Fixing = 2;
+                GameStatus.Instance.playerActions.Actions = "El jugador ha instalado las barras";
             }
         }
     }

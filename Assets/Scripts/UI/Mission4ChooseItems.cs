@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections; 
 
 public class Mission4ChooseItems : MonoBehaviour
 {
@@ -24,19 +25,25 @@ public class Mission4ChooseItems : MonoBehaviour
     public GameObject g7;
     public GameObject g8;
 
+    GameStatus gs;
+
 
 
 
     void Start()
     {
+        gs = GameStatus.Instance;
+        CameraHandler ch = CameraHandler.Instance;
+
         aceptB.onClick.AddListener(() =>
         {
             LeanTween.alphaCanvas(gameObject.GetComponent<CanvasGroup>(), 0, 0.5f).setOnComplete(() =>
             {
                 gameObject.SetActive(false);
             });
-            CameraHandler.Instance.FirstPersonMode = true;
-            GameStatus.Instance.Stat.Duchar = 1;
+            ch.FirstPersonMode = true;
+            gs.Stat.Duchar = 1;
+            SaveChoicesInPlayerActions();            
         });
 
         t1.onValueChanged.AddListener((b) => g1.SetActive(b));
@@ -47,6 +54,20 @@ public class Mission4ChooseItems : MonoBehaviour
         t6.onValueChanged.AddListener((b) => g6.SetActive(b));
         t7.onValueChanged.AddListener((b) => g7.SetActive(b));
         t8.onValueChanged.AddListener((b) => g8.SetActive(b));
+    }
+
+    public IEnumerator  SaveChoicesInPlayerActions()
+    {
+        if (t1.isOn) gs.playerActions.Actions = "ha elegido el antidezlisante";
+        if (t2.isOn) gs.playerActions.Actions = "ha elegido el jabon";
+        if (t3.isOn) gs.playerActions.Actions = "ha elegido la lampara";
+        if (t4.isOn) gs.playerActions.Actions = "ha elegido la linterna";
+        if (t5.isOn) gs.playerActions.Actions = "ha elegido la radio";
+        if (t6.isOn) gs.playerActions.Actions = "ha elegido el champu";
+        if (t7.isOn) gs.playerActions.Actions = "ha elegido la silla de soporte";
+        if (t8.isOn) gs.playerActions.Actions = "ha elegido la toalla";
+        else gs.towelonChooseItems = false;
+        yield return new WaitForSeconds(1f);
     }
 
 }

@@ -11,7 +11,7 @@ public class GlobalPanelHandler : ElSingleton<GlobalPanelHandler>
     public GameObject[] ActivePanel;
 
     public int interfaceDepth = 0;
-    static bool _onceCaled = false;
+    static bool _onceCalled = false;
     private GameObject auxO;
 
     public void Start()
@@ -73,6 +73,7 @@ public class GlobalPanelHandler : ElSingleton<GlobalPanelHandler>
             obj = GetActivePanel();
             LeanTween.alphaCanvas(obj.GetComponent<CanvasGroup>(), 0f, 0.2f);
             obj.SetActive(false);
+            ActivePanel[interfaceDepth] = null;
             interfaceDepth = interfaceDepth - 1;
         }
     }
@@ -137,22 +138,21 @@ public class GlobalPanelHandler : ElSingleton<GlobalPanelHandler>
     /// </summary>
     public void ResetValues()
     {
-        for (int i = 0; i < interfaceDepth; i++)
+        for (int i = 0; i <= interfaceDepth; i++)
         {
             ActivePanel[i] = null;
         }
         interfaceDepth = 0;
-
     }
 
 
 
     void Awake()
     {
-        if (!_onceCaled)
+        if (!_onceCalled)
         {
             DontDestroyOnLoad(gameObject);
-            _onceCaled = true;
+            _onceCalled = true;
         }
         else
         {

@@ -13,8 +13,10 @@ public class PlatoALavar : MonoBehaviour
             GameStatus.Instance.Stat.Cocinar = 4;
             src.PlayOneShot(pickUpSound);
             gameObject.GetComponent<MeshRenderer>().enabled = false;
+            GameStatus.Instance.playerActions.Actions = "Ha tomado el plato que Winston ha dejado al comer";
+
         }
-       
+
     }
 
     void Start()

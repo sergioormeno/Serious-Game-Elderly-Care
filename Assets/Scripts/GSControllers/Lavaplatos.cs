@@ -25,7 +25,7 @@ public class Lavaplatos : MonoBehaviour {
         yield return new WaitForSeconds(3f);
         DiaryPanelHandler.Instance.IsDarkPanelActive = false;
         src.Stop();
-        GameStatus.Instance.pActions.Actions = "Ha lavado la loza ocupada por Winston";
+        GameStatus.Instance.playerActions.Actions = "Ha lavado la loza ocupada por Winston";
         platoLimpio.SetActive(true);
     }
 }

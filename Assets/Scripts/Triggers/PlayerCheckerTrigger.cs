@@ -7,7 +7,8 @@ public class PlayerCheckerTrigger : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            GameStatus.Instance.pActions.Actions = "Ha dejado sólo a Winston durante su baño";
+            GameStatus.Instance.playerActions.Actions = "Ha dejado sólo a Winston durante su baño";
+            Destroy(gameObject);
         }
     }
 }

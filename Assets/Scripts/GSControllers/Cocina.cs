@@ -38,8 +38,8 @@ public class Cocina : MonoBehaviour
         yield return new WaitForSeconds(1f);
         src.PlayOneShot(FriedSound);
         yield return new WaitForSeconds(15f);
-        GameStatus.Instance.Stat.Cocinar = 2;
-        GameStatus.Instance.pActions.Actions = "Ha cocinado y preparado lo que ha seleccionado";
+        gs.Stat.Cocinar = 2;
+        gs.playerActions.Actions = "Ha cocinado y preparado lo que ha seleccionado para darle a Winston";
         src.Stop();
         FriedPan.SetActive(false);
     }

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 public class DataService
 {
-
+    public int actionNumber=0;
     private SQLiteConnection _connection;
 
     public DataService(string DatabaseName)
@@ -61,64 +61,7 @@ public class DataService
 
     }
 
-    public void AddNewUser()
-    {
-
-    }
-
-    //public IEnumerable ReturnAllPlayersNicks()
-    //{
-
-    //}
-
-
-
-
-    //public void CreateDB(){
-    //	_connection.DropTable<Person> ();
-    //	_connection.CreateTable<Person> ();
-
-    //	_connection.InsertAll (new[]{
-    //		new Person{
-    //			Id = 1,
-    //			Name = "Tom",
-    //			Surname = "Perez",
-    //			Age = 56
-    //		},
-    //		new Person{
-    //			Id = 2,
-    //			Name = "Fred",
-    //			Surname = "Arthurson",
-    //			Age = 16
-    //		},
-    //		new Person{
-    //			Id = 3,
-    //			Name = "John",
-    //			Surname = "Doe",
-    //			Age = 25
-    //		},
-    //		new Person{
-    //			Id = 4,
-    //			Name = "Roberto",
-    //			Surname = "Huertas",
-    //			Age = 37
-    //		}
-    //	});
-    //}
-
-    //public IEnumerable<Person> GetPersons(){
-    //	return _connection.Table<Person>();
-    //}
-
-    //public IEnumerable<Person> GetPersonsNamedRoberto(){
-    //	return _connection.Table<Person>().Where(x => x.Name == "Roberto");
-    //}
-
-    //public Person GetJohnny(){
-    //	return _connection.Table<Person>().Where(x => x.Name == "Johnny").FirstOrDefault();
-    //}
-
-    public void CreateJugador(string nick, string name, string lname, int age, string mail)
+    public void CreatePlayer(string nick, string name, string lname, int age, string mail)
     {
         var j = new Jugador
         {
@@ -131,18 +74,28 @@ public class DataService
         _connection.Insert(j);
     }
 
-    public void AddAction(string name, int id_J, int id_P)
+    public void AddPlayerScore(int score, int id_J, int id_P)
+    {
+        Partida partida = _connection.Table<Partida>()
+            .Where(x => x.id_Jugador == id_J && x.id == id_P)
+            .FirstOrDefault();
+        partida.Puntaje = score;
+        _connection.Update(partida);
+    }
+
+    public void AddAction(string name, int id_J, int id_P,int num)
     {
         var a = new Accion
         {
-            Nombre = name,
+            Numero = num,
+            Nombre = name,          
             id_Jugador = id_J,
-            id_Partida = id_P,
+            id_Partida = id_P,            
         };
         _connection.Insert(a);
     }
 
-    public void CreateGame(string name, int idj)
+    public Partida CreateGame(string name, int idj)
     {
         var p = new Partida
         {
@@ -151,7 +104,43 @@ public class DataService
             Fecha = System.DateTime.Today.ToString(),
         };
         _connection.Insert(p);
+        return p;
     }
 
+    public IEnumerable<Jugador> GetJugador()
+    {
+        return _connection.Table<Jugador>();
+    }
+
+    public List<string> GetPlayersNicks()
+    {
+        List<string> nicks = new List<string>();
+        var query = _connection.Table<Jugador>();
+        foreach (var jugador in query) nicks.Add(jugador.Nick);
+        return nicks;
+    }
+
+    public List<string> GetPlayersGames(int id)
+    {
+        List<string> games = new List<string>();
+        var query = _connection.Table<Partida>().Where(x => x.id_Jugador == id);
+        foreach (var partida in query) games.Add(partida.Fecha);
+        return games;
+    }
+
+    public IEnumerable<Accion> GetPlayerActionsByGame(int id_j, int id_p)
+    {
+        return _connection.Table<Accion>().Where(x => x.id_Jugador == id_j &&  x.id_Partida == id_p);
+    }
+
+    public IEnumerable<Partida> GetGameByPlayer(int id_j)
+    {
+        return _connection.Table<Partida>().Where(x => x.id_Jugador == id_j);
+    }
+
+    public Jugador GetPlayerByNick(string n)
+    {
+        return _connection.Table<Jugador>().Where(x => x.Nick == n).First(); 
+    }
 
 }
