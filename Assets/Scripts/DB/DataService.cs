@@ -128,6 +128,8 @@ public class DataService
         return games;
     }
 
+
+
     public IEnumerable<Accion> GetPlayerActionsByGame(int id_j, int id_p)
     {
         return _connection.Table<Accion>().Where(x => x.id_Jugador == id_j &&  x.id_Partida == id_p);
@@ -142,5 +144,11 @@ public class DataService
     {
         return _connection.Table<Jugador>().Where(x => x.Nick == n).First(); 
     }
+
+    public Partida GetGameByDate(string n)
+    {
+        return _connection.Table<Partida>().Where(x => x.Fecha == n).First();
+    }
+
 
 }

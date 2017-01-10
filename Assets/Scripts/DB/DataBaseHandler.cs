@@ -92,19 +92,31 @@ public class DataBaseHandler : ElSingleton<DataBaseHandler> {
         return ds.GetPlayerByNick(nick).id;
     }
 
+    public int GetGameIDByDate(string date)
+    {
+        var ds = dsConnect();
+        return ds.GetGameByDate(date).id;
+    }
+
     public void ClearActionsOrders()
     {
         actionNumber = 0;
     }
 
-    public void UpdateScoreInDB()
+    public void UpdateScoreInDB(int score)
     {
         var ds = dsConnect();
-        ds.AddPlayerScore(PlayerScoreHandler.Instance.Puntaje, id_jugador, id_partida);
+        ds.AddPlayerScore(score, id_jugador, id_partida);
     }
 
     public DataService dsConnect()
     {
         return new DataService("jugadores.db");
+    }
+
+    public IEnumerable<Accion> GetActionsByPlayerAndGameID(int ij, int ip)
+    {
+        var ds = dsConnect();
+        return ds.GetPlayerActionsByGame(ij, ip);
     }
 }
