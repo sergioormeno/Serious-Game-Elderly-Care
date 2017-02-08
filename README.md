@@ -12,11 +12,11 @@
 
 ## Contribution
 
-Just fork the original repo ( [https://github.com/sierz/vjserio-CuidadoAdultoMayor/](https://github.com/sierz/vjserio-CuidadoAdultoMayor/) ) and make a merge request, or drop me a mail at [sergioignacio.ov@gmail.com](mailto:sergioignacio.ov@gmail.com)
+Just fork the original repo ( [https://github.com/sierz/Serious-Game-Elderly-Care/](https://github.com/sierz/Serious-Game-Elderly-Care/) ) and make a merge request, or drop me a mail at [sergioignacio.ov@gmail.com](mailto:sergioignacio.ov@gmail.com)
 
 ## Play de Game
 
-You can download a build of the game Here: [Download](https://drive.google.com/open?id=0ByAS9tK_zGZ1MW1QRXk0ejl1RjQ) 
+You can download a build of the game Here: [Download](https://mega.nz/#!e5U2XDJI!YIhE0YIpVX63-P1VdOKcoKY1ypf7ffx16t4RNC6R8zY) 
 
 ## License©️
 
