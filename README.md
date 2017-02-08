@@ -16,4 +16,4 @@ Just fork the original repo ( [https://github.com/sierz/vjserio-CuidadoAdultoMay
 
 ## License©️
 
-Resume is licensed under the MIT Open Source license. For more information, see the LICENSE file in this repository.
+This project is licensed under the MIT Open Source license. For more information, see the LICENSE file in this repository.
